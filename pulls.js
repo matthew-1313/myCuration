@@ -1,1 +1,0 @@
-const { getTenArtworks } = require("./api");

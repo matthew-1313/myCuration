@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  //getChicagos,
-  //getHarvards,
-  //getChicagoSpecifics,
-  getHarvardSpecifics,
-  getMetMuSpecificIDs,
-  getMetMuByID,
-} from "../../api";
+import { getHarvardSpecifics, getMetMuSpecificIDs } from "../../api";
 
 const ArtworkList = () => {
   const [artworks, setArtworks] = useState([]);
@@ -20,28 +13,8 @@ const ArtworkList = () => {
   //   });
   // }, [artworks]);
 
-  //works for ten each
-  // const getTenEach = async () => {
-  //   setIsLoading(true);
-
-  //   try {
-  //     const [chiData, harvData] = await Promise.all([
-  //       getChicagos(),
-  //       getHarvards(),
-  //     ]);
-  //     const mergedArray = [...chiData, ...harvData];
-  //     setArtworks(mergedArray);
-  //   } catch (error) {
-  //     //console.log(fullArr);
-  //     //console.log(artworks);
-  //     console.error(error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const getTenEach = async () => {
-    const searchTerm = "chair OR painting";
+    const searchTerm = "dog AND cat";
     setIsLoading(true);
 
     try {
@@ -52,19 +25,9 @@ const ArtworkList = () => {
       const mergedArray = [...metmuData, ...harvData];
       setArtworks(mergedArray);
     } catch (error) {
-      //console.log(fullArr);
-      //console.log(artworks);
       console.error(error);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const getMetMu = async () => {
-    try {
-      const data = await getMetMuByID([52576, 12538]);
-    } catch (error) {
-      console.error(error);
     }
   };
 

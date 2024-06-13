@@ -1,6 +1,5 @@
 import { useState } from "react";
 import ArtworkList from "./components/Results";
-import Types from "./components/Types";
 import SearchPage from "./components/SearchPage";
 import "./App.css";
 

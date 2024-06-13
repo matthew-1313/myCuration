@@ -83,36 +83,23 @@ const HarvardApi = axios.create({
 // };
 
 ///search?"any"q=${term} || /search?"any"q=${term}&page=5&limit=100
-export const getMetMuSpecificIDs = (term) => {
-  return MetMuApi.get(
-    `/public/collection/v1/search?hasImages=true&q=${term}`
-  ).then((res) => {
-    const firstHundy = [];
-    const resArray = res.data.objectIDs;
-    for (let i = 0; i < 50; i++) {
-      firstHundy.push(resArray[i]);
+export const getMetMuSpecificIDs = async (term) => {
+  try {
+    const res = await MetMuApi.get(
+      `/public/collection/v1/search?hasImages=true&q=${term}`
+    );
+    const firstBatch = [];
+    const objIDS = res.data.objectIDs;
+    for (let i = 0; i < 20; i++) {
+      firstBatch.push(objIDS[i]);
     }
-    const artworks = getMetMuByID(firstHundy);
-    console.log("resME", artworks);
-    return artworks;
-  });
-};
-
-export const getMetMuByID = (arr) => {
-  const searchArr = [...arr];
-  //console.log(searchArr);
-  const artworks = [];
-  let dud = 0;
-  searchArr.forEach((num) => {
-    return MetMuApi.get(`/public/collection/v1/objects/${num}`)
-      .then((res) => {
-        if (!res.status === 200) {
-          dud += 1;
-        } else {
-          //console.log("byID response", res);
+    const artworks = await Promise.all(
+      firstBatch.map(async (id) => {
+        const res = await MetMuApi.get(`/public/collection/v1/objects/${id}`);
+        if (res.status === 200 && res.data.primaryImage) {
           const incomingOb = res.data;
           const noDes = "No more information at this time";
-          const newArtObj = {
+          return {
             id: incomingOb.objectID,
             artist: incomingOb.artistDisplayName || "Unknown Artist",
             title: incomingOb.title || "Unknown Title",
@@ -123,18 +110,57 @@ export const getMetMuByID = (arr) => {
             description: incomingOb.description || noDes,
             location: "Metropolitan Museum of Art",
           };
-          artworks.push(newArtObj);
-          //console.log("in");
         }
-        //console.log(artworks, dud, "fghgh");
+        return null;
       })
-      .catch((error) => {
-        console.error(error);
-      });
-  });
-  //console.log("resMetMu", artworks);
-  return artworks;
+    );
+    const filteredArtworks = artworks.filter(Boolean);
+    console.log("metMu", filteredArtworks);
+    return filteredArtworks;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 };
+
+//doesn't work but keep
+// export const getMetMuByID = (arr) => {
+//   const searchArr = [...arr];
+//   //console.log(searchArr);
+//   const artworks = [];
+//   let dud = 0;
+//   searchArr.forEach((num) => {
+//     return MetMuApi.get(`/public/collection/v1/objects/${num}`)
+//       .then((res) => {
+//         if (!res.status === 200) {
+//           dud += 1;
+//         } else {
+//           //console.log("byID response", res);
+//           const incomingOb = res.data;
+//           const noDes = "No more information at this time";
+//           const newArtObj = {
+//             id: incomingOb.objectID,
+//             artist: incomingOb.artistDisplayName || "Unknown Artist",
+//             title: incomingOb.title || "Unknown Title",
+//             date: incomingOb.objectDate || "Unknown Date",
+//             type: incomingOb.objectName || "Unknown Art Type",
+//             medium: incomingOb.medium || "Unknown Medium",
+//             image_url: incomingOb.primaryImage,
+//             description: incomingOb.description || noDes,
+//             location: "Metropolitan Museum of Art",
+//           };
+//           artworks.push(newArtObj);
+//           //console.log("in");
+//         }
+//         //console.log(artworks, dud, "fghgh");
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       });
+//   });
+//   //console.log("resMetMu", artworks);
+//   return artworks;
+// };
 
 // export const getChicagoSpecifics = (term) => {
 //   return ChicagoApi.get(
@@ -192,7 +218,7 @@ export const getHarvardSpecifics = (term) => {
     params: {
       keyword: term,
       // field: "images:idsid",
-      size: "40",
+      size: "20",
     },
   }).then((res) => {
     const artworks = [];
@@ -245,62 +271,3 @@ export const getHarvardSpecifics = (term) => {
 //     return res.data.data;
 //   });
 // };
-
-// export const getArtworksByArtist = (artist) => {
-//   return ChicagoApi.get(`/artworks/search?q=${artist}`).then((res) => {
-//     return res.data.data;
-//   });
-// };
-// export const getArtworksByTitle = (title) => {
-//   return ChicagoApi.get(`/artworks/search?q=${title}`).then((res) => {
-//     return res.data.data;
-//   });
-// };
-
-// export const getArtworksById = (id) => {
-//   return ChicagoApi.get(`/artworks/${id}`).then((res) => {
-//     return res.data.data;
-//   });
-// };
-
-// //find types first
-export const getTypes = () => {
-  return ChicagoApi.get("/artwork-types").then((res) => {
-    console.log(res.data.data);
-    return res.data.data;
-  });
-};
-
-// //
-// export const getArtworksByType = (type) => {
-//   return ChicagoApi.get(`/artworks/search?q=${type}`).then((res) => {
-//     return res.data.data;
-//   });
-// };
-
-// //find categories first
-// export const getCategories = () => {
-//   return ChicagoApi.get("/category-terms").then((res) => {
-//     console.log(res.data.data);
-//     return res.data.data;
-//   });
-// };
-
-// export const getArtworksByCategory = (category) => {
-//   return ChicagoApi.get(`/artworks/search?q=${category}`).then((res) => {
-//     return res.data.data;
-//   });
-// };
-
-// Painting
-// Vessel
-// Basketry
-// Miniature room
-// Model
-// Architectural fragment
-// Print
-// Performance Arts
-// Installation
-// Mixed Media
-// Drawing and Watercolor
-// Costume and Accessories
