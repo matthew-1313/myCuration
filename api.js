@@ -82,7 +82,8 @@ const HarvardApi = axios.create({
 //   });
 // };
 
-///search?"any"q=${term} || /search?"any"q=${term}&page=5&limit=100
+//WRITE A NEW FUNCTION FOR EACH API, THAT READ AN ARRAY OF IDS AND RETURNS THE SELECTED OBJECTS IN AN ARRAY
+
 export const getMetMuSpecificIDs = async (term) => {
   try {
     const res = await MetMuApi.get(
@@ -90,7 +91,7 @@ export const getMetMuSpecificIDs = async (term) => {
     );
     const firstBatch = [];
     const objIDS = res.data.objectIDs;
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 30; i++) {
       firstBatch.push(objIDS[i]);
     }
     const artworks = await Promise.all(
@@ -218,7 +219,7 @@ export const getHarvardSpecifics = (term) => {
     params: {
       keyword: term,
       // field: "images:idsid",
-      size: "20",
+      size: "30",
     },
   }).then((res) => {
     const artworks = [];

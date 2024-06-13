@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getHarvardSpecifics, getMetMuSpecificIDs } from "../../api";
 
-const ArtworkList = () => {
+export const Results = () => {
+  //import searchterm state
+  //import myWall state
+  // populate results div with pictures and "+" icons
+  // id "+" is pushed, update myWall array with that object id
+
   const [artworks, setArtworks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
@@ -14,7 +19,7 @@ const ArtworkList = () => {
   // }, [artworks]);
 
   const getTenEach = async () => {
-    const searchTerm = "dog AND cat";
+    const searchTerm = "cat";
     setIsLoading(true);
 
     try {
@@ -84,5 +89,3 @@ const ArtworkList = () => {
     );
   }
 };
-
-export default ArtworkList;
