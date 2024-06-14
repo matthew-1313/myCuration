@@ -8,20 +8,19 @@ import "./App.css";
 import "./index.css";
 
 function App() {
-  //set state of myWall here, import into both pages
-  // myWall = {
-  //   MetMu: [],
-  //   Harv: [],
-  // };
-  //when updating state, [...myWall, ], myWall.MetMu.push(obj.id)
+  const [myWall, setMyWall] = useState([]);
+
   return (
     <>
       <h1>myCuration</h1>
       <NavBar />
       <br />
       <Routes>
-        <Route path="/wallpage" element={<WallPage />} />
-        <Route path="/searchpage" element={<SearchPage />} />
+        <Route path="/wallpage" element={<WallPage myWall={myWall} />} />
+        <Route
+          path="/searchpage"
+          element={<SearchPage setMyWall={setMyWall} />}
+        />
       </Routes>
       {/* <div>
         <ArtworkList />

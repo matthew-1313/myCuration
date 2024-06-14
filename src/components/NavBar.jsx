@@ -6,7 +6,7 @@ export const NavBar = () => {
   return (
     <div>
       <Link to="/wallpage">My Wall </Link> |
-      <Link to="/searchpage">Search </Link>
+      <Link to="/searchpage"> Search</Link>
     </div>
   );
 };

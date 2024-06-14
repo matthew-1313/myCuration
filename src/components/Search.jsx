@@ -1,89 +1,67 @@
 import React, { useState, useEffect } from "react";
+import { getHarvardSpecifics, getMetMuSpecificIDs } from "../../api";
 
-export const Search = () => {
-  //import searchterm state
+export const Search = ({ setArtworks }) => {
   //set searchterm with modified search string, with "  AND  " etc.
 
-  //   function fetchSearchBar() {
-  //     //get the search bar text
-  //     // set a state for searchTerm above
-  //   }
-  const [isOpen, setIsOpen] = useState(false);
-  const [typeButtonText, setTypeButtonText] = useState("Type");
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [typed, setTyped] = useState("");
+  const [merged, setMerged] = useState([]);
 
-  function toggleDropdown() {
-    setIsOpen(!isOpen);
-  }
+  useEffect(() => {
+    const newSearch = typed.replaceAll(" ", " AND ");
+    setSearchTerm(newSearch);
+  }, [typed]);
 
-  function typeIs(str) {
-    setTypeButtonText(str);
-    //set API query term here too, some will be Drawing-and-Watercolor or all lowercase etc
-    setIsOpen(!isOpen);
-  }
+  const getArtworks = async () => {
+    setIsLoading(true);
+
+    try {
+      const [metmuData, harvData] = await Promise.all([
+        getMetMuSpecificIDs(searchTerm),
+        getHarvardSpecifics(searchTerm),
+      ]);
+      const mergedArray = [...metmuData, ...harvData];
+      setArtworks(mergedArray);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // function fetchSearchBar() {
+  //   // const newSearch = typed.replaceAll(" ", " AND ");
+  //   // setSearchTerm(newSearch);
+  //   getArtworks();
+  //   // try {
+  //   //   const res = await getArtworks(newSearch);
+  //   //   setArtworks(res);
+  //   // } catch (error) {
+  //   //   console.error(error);
+  //   // }
+  // }
 
   return (
     <div>
       <h2>Search</h2>
-      <div className="dropdown">
-        <button onClick={toggleDropdown} className="dropbtn">
-          {typeButtonText}
-        </button>
-        {isOpen && (
-          <ul className="dropdown-content">
-            <a href="#" onClick={() => typeIs("Painting")}>
-              Painting
-            </a>
-            <a href="#" onClick={() => typeIs("Vessel")}>
-              Vessel
-            </a>
-            <a href="#" onClick={() => typeIs("Basketry")}>
-              Basketry
-            </a>
-            <a href="#" onClick={() => typeIs("Miniature Room")}>
-              Miniature Room
-            </a>
-            <a href="#" onClick={() => typeIs("Model")}>
-              Model
-            </a>
-            <a href="#" onClick={() => typeIs("Architectural Fragment")}>
-              Architectural Fragment
-            </a>
-            <a href="#" onClick={() => typeIs("Print")}>
-              Print
-            </a>
-            <a href="#" onClick={() => typeIs("Performance Arts")}>
-              Performance Arts
-            </a>
-            <a href="#" onClick={() => typeIs("Installation")}>
-              Installation
-            </a>
-            <a href="#" onClick={() => typeIs("Mixed Media")}>
-              Mixed Media
-            </a>
-            <a href="#" onClick={() => typeIs("Drawing and Watercolor")}>
-              Drawing and Watercolor
-            </a>
-            <a href="#" onClick={() => typeIs("Costume and Accessories")}>
-              Costume and Accessories
-            </a>
-          </ul>
-        )}
-      </div>
-      {/* <div className="searchBar">
+      <div className="searchBar">
         <input
-          onChange={(event) => {
-            searchTerm = event.target.value;
-          }}
+          className="searchInput"
           type="text"
-          placeholder="Search..."
-          id="SearchTerm"
-          value={searchTerm}
-          onKeyUp="filterFunction()"
+          placeholder="Enter Keywords..."
+          id="typedSearchTerm"
+          value={typed}
+          onChange={(event) => {
+            setTyped(event.target.value);
+          }}
         />
-        <button onClick={fetchSearchBar()} className="dropbtn">
+        <button onClick={getArtworks} className="dropbtn">
           Search
         </button>
-      </div> */}
+        {isLoading ? <p>Loading Results...</p> : <p></p>}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export const Highlight = () => {
+export const Highlight = ({ highlightedArt }) => {
   //import hightlighted state, read state and populate a div with bigArtCard
   return (
     <div>

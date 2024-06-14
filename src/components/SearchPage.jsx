@@ -7,13 +7,13 @@ import { Results } from "./Results";
 
 let searchTerm = "";
 
-export const SearchPage = () => {
-  //import mywall state
-  // set serarchterm state here
+export const SearchPage = ({ myWall, setMyWall }) => {
+  const [artworks, setArtworks] = useState([]);
+
   return (
     <div>
-      <Search />
-      <Results />
+      <Search setArtworks={setArtworks} />
+      <Results artworks={artworks} myWall={myWall} setMyWall={setMyWall} />
     </div>
   );
 };

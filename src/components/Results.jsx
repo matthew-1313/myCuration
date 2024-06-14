@@ -1,40 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { getHarvardSpecifics, getMetMuSpecificIDs } from "../../api";
 
-export const Results = () => {
-  //import searchterm state
-  //import myWall state
+export const Results = ({ myWall, setMyWall, artworks }) => {
+  //setMyWall on + click setMyWall([...myWall, thisObj])
   // populate results div with pictures and "+" icons
   // id "+" is pushed, update myWall array with that object id
 
-  const [artworks, setArtworks] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [searchText, setSearchText] = useState("");
-
   // useEffect(() => {
   //   getTenArtworks().then((artworks) => {
-  //     setArtworks(artworks);
+  //     //console.log(searchTerm);
   //   });
   // }, [artworks]);
-
-  const getTenEach = async () => {
-    const searchTerm = "cat";
-    setIsLoading(true);
-
-    try {
-      const [metmuData, harvData] = await Promise.all([
-        getMetMuSpecificIDs(searchTerm),
-        getHarvardSpecifics(searchTerm),
-      ]);
-      const mergedArray = [...metmuData, ...harvData];
-      setArtworks(mergedArray);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   // const handleFetchImage = async () => {
   //   setIsLoading(true);
@@ -58,28 +34,30 @@ export const Results = () => {
   //   });
   //   //console.log(artworks);
   // }
+  function updateMyWall(artwork) {
+    if (!myWall) {
+      setMyWall([artwork]);
+    } else {
+      setMyWall([...myWall, artwork]);
+    }
+  }
 
   if (!artworks) {
-    return <h3>Search for Artworks!</h3>;
+    return <h4>Enter some keywords to search for artworks!</h4>;
   } else {
     return (
       <div>
         <h2>Artworks</h2>
-        {isLoading ? <p>Loading Results...</p> : <p></p>}
-        <button onClick={getTenEach}>one</button>
         <div>
           <ul className="image-list-1">
             {artworks.map((artwork) => (
               <div key={artwork.id} className="small-art-tile">
                 <div className="small-art-container">
                   <img src={artwork.image_url} className="small-image" />
-                </div>
-                <div className="small-info">
-                  <h3>{artwork.title}</h3>
-                  <p>
-                    by <b>{artwork.artist}</b>
-                  </p>
-                  <p>{artwork.location}</p>
+                  <br />
+                  <button onClick={updateMyWall(artwork)} className="addButton">
+                    +
+                  </button>
                 </div>
               </div>
             ))}

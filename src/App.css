@@ -46,14 +46,18 @@
   position:absolute
 }
 
-.dropdown-toggle {
+.searchInput {
+  color: #1a1a1a;
   background-color: #f1f1f1;
   border: none;
   padding: 10px 16px;
-  cursor: pointer;
+  border-radius: 8px;
 }
 
 .dropdown-content {
+  background-color: #f1f1f1;
+  border: none;
+  padding: 10px 16px;
   position: absolute;
   border-radius: 8px;
   background-color: #1a1a1a;
@@ -80,31 +84,52 @@
 
 .image-list-1 {
   display: inline;
-  padding: 2em;
+  /* padding: 1em; */
 }
 
-.small-art-container {
-  width: 100%;
-}
-
-.small-image {
-  max-width: 250px;
-  max-height: 250px;
-  object-fit: cover;
-  display: inline;
+.image-list-1 div {
+  margin: 1vw;
 }
 
 .small-art-tile {
-  max-height: 500px;
-  max-width: 300px;
-  padding: 1em;
+  /* max-height: 10vw;
+  max-width: 15vw; */
+  padding: 1vw;
   color: #1a1a1a;
   background-color: rgba(255, 255, 255, 0.87);
   border-radius: 8px;
   display: inline-block;
 }
 
+/* .small-art-container {
+  max-width: 14vw;
+  max-height: 9vw;
+  width: 100%;
+} */
+
+.small-art-container button {
+  z-index: 1;
+  width: 20vw;
+}
+
+.small-image {
+  z-index: 0;
+  max-width: 20vw;
+  max-height: 20vw;
+  /* width: 100%; */
+  object-fit: cover;
+  display: inline;
+}
+
 .small-info {
   max-width: 200px;
   display: inline-block;
+}
+
+.wallBoundry {
+  width: 90vw;
+}
+
+.backgroundImage {
+  width: 90vw;
 }
