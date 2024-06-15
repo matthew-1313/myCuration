@@ -42,12 +42,12 @@ export const Results = ({ myWall, setMyWall, artworks }) => {
     }
   }
 
-  if (!artworks) {
+  if (artworks.length < 1) {
     return <h4>Enter some keywords to search for artworks!</h4>;
   } else {
     return (
       <div>
-        <h2>Artworks</h2>
+        <h4>Add an artwork to your wall!</h4>
         <div>
           <ul className="image-list-1">
             {artworks.map((artwork) => (

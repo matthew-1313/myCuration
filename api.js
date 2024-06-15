@@ -91,7 +91,7 @@ export const getMetMuSpecificIDs = async (term) => {
     );
     const firstBatch = [];
     const objIDS = res.data.objectIDs;
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 40; i++) {
       firstBatch.push(objIDS[i]);
     }
     const artworks = await Promise.all(
@@ -219,7 +219,7 @@ export const getHarvardSpecifics = (term) => {
     params: {
       keyword: term,
       // field: "images:idsid",
-      size: "30",
+      size: "40",
     },
   }).then((res) => {
     const artworks = [];
