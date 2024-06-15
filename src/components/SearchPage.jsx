@@ -7,13 +7,18 @@ import { Results } from "./Results";
 
 let searchTerm = "";
 
-export const SearchPage = ({ myWall, setMyWall }) => {
+export const SearchPage = ({ myWall, setMyWall, myWallIsFull }) => {
   const [artworks, setArtworks] = useState([]);
 
   return (
     <div>
       <Search setArtworks={setArtworks} />
-      <Results artworks={artworks} myWall={myWall} setMyWall={setMyWall} />
+      <Results
+        artworks={artworks}
+        myWallIsFull={myWallIsFull}
+        myWall={myWall}
+        setMyWall={setMyWall}
+      />
     </div>
   );
 };

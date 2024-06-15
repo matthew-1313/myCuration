@@ -133,3 +133,31 @@
 .backgroundImage {
   width: 90vw;
 }
+
+.wall-list {
+  display: inline;
+  /* padding: 1em; */
+}
+
+.wall-list div {
+  margin: 1vw;
+}
+
+.wall-art-tile {
+  /* max-height: 10vw;
+  max-width: 15vw; */
+  padding: 1vw;
+  color: #1a1a1a;
+  background-color: rgba(255, 255, 255, 0.87);
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.small-image {
+  z-index: 0;
+  width: 20vw;
+  height: 20vw;
+  /* width: 100%; */
+  object-fit:scale-down;
+  display: inline;
+}
