@@ -17,7 +17,8 @@ const HarvardApi = axios.create({
   },
 });
 
-//works for ten chicago works
+//works for ten chicago artworks
+
 // export const getChicagos = () => {
 //   return ChicagoApi.get("/artworks?limit=10").then((res) => {
 //     const artworks = [];
@@ -41,7 +42,8 @@ const HarvardApi = axios.create({
 //   });
 // };
 
-//works for ten harvard works
+//works for ten harvard artworks
+
 // export const getHarvards = (dfghjk) => {
 //   return HarvardApi.get("/object").then((res) => {
 //     const artworks = [];
@@ -122,7 +124,8 @@ export const getMetMuSpecificIDs = async (term) => {
   }
 };
 
-//doesn't work but keep
+//doesn't work but keep in case
+
 // export const getMetMuByID = (arr) => {
 //   const searchArr = [...arr];
 //   //console.log(searchArr);
@@ -216,7 +219,6 @@ export const getHarvardSpecifics = (term) => {
   return HarvardApi.get(`/object`, {
     params: {
       keyword: term,
-      // field: "images:idsid",
       size: "40",
     },
   })

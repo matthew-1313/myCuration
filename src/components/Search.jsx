@@ -7,7 +7,6 @@ export const Search = ({ setArtworks }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [typed, setTyped] = useState("");
-  const [merged, setMerged] = useState([]);
 
   useEffect(() => {
     const newSearch = typed.replaceAll(" ", " AND ");
@@ -31,21 +30,8 @@ export const Search = ({ setArtworks }) => {
     }
   };
 
-  // function fetchSearchBar() {
-  //   // const newSearch = typed.replaceAll(" ", " AND ");
-  //   // setSearchTerm(newSearch);
-  //   getArtworks();
-  //   // try {
-  //   //   const res = await getArtworks(newSearch);
-  //   //   setArtworks(res);
-  //   // } catch (error) {
-  //   //   console.error(error);
-  //   // }
-  // }
-
   return (
     <div>
-      <h2>Search</h2>
       <div className="searchBar">
         <input
           className="searchInput"

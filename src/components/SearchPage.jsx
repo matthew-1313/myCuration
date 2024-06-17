@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import "../App.css";
 import { Search } from "./Search";
 import { Results } from "./Results";

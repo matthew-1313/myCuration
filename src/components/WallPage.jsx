@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Wall } from "./Wall";
 // import { Highlight } from "./Highlight";
 
@@ -10,9 +10,15 @@ export const WallPage = ({ myWall, myWallCount, setMyWallCount }) => {
       <Wall
         myWall={myWall}
         myWallCount={myWallCount}
+        // setHighlightedArt={setHighlightedArt}
         setMyWallCount={setMyWallCount}
       />
       <br />
+      {/* <Highlight
+        highlightedArt={highlightedArt}
+        myWallCount={myWallCount}
+        setMyWallCount={setMyWallCount}
+      /> */}
     </div>
   );
 };

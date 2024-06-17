@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 
 export const Results = ({
   myWall,
@@ -12,7 +11,7 @@ export const Results = ({
 }) => {
   //setMyWall on + click setMyWall([...myWall, thisObj])
   // populate results div with pictures and "+" icons
-  // id "+" is pushed, update myWall array with that object id
+  // id "+" is pushed, update seperate array with that object id so art can only be added once
 
   const [wallFull, setWallFull] = useState(false);
 
