@@ -9,11 +9,8 @@ import "./index.css";
 
 function App() {
   const [myWall, setMyWall] = useState([]);
-  const [myWallIsFull, setMyWallIsFull] = useState(false);
-
-  if (myWall.length >= 10) {
-    setMyWallIsFull(true);
-  }
+  const [myWallCount, setMyWallCount] = useState(0);
+  const [idsOnWall, setIdsOnWall] = useState([]);
 
   return (
     <>
@@ -21,11 +18,26 @@ function App() {
       <NavBar />
       <br />
       <Routes>
-        <Route path="/wallpage" element={<WallPage myWall={myWall} />} />
+        <Route
+          path="/wallpage"
+          element={
+            <WallPage
+              myWall={myWall}
+              myWallCount={myWallCount}
+              setMyWallCount={setMyWallCount}
+            />
+          }
+        />
         <Route
           path="/searchpage"
           element={
-            <SearchPage myWallIsFull={myWallIsFull} setMyWall={setMyWall} />
+            <SearchPage
+              setMyWall={setMyWall}
+              myWallCount={myWallCount}
+              setMyWallCount={setMyWallCount}
+              idsOnWall={idsOnWall}
+              setIdsOnWall={setIdsOnWall}
+            />
           }
         />
       </Routes>

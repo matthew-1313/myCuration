@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const ChicagoApi = axios.create({
-  baseURL: "https://api.artic.edu/api/v1",
-});
+// const ChicagoApi = axios.create({
+//   baseURL: "https://api.artic.edu/api/v1",
+// });
 
 const MetMuApi = axios.create({
   baseURL: "https://collectionapi.metmuseum.org",
@@ -82,8 +82,6 @@ const HarvardApi = axios.create({
 //   });
 // };
 
-//WRITE A NEW FUNCTION FOR EACH API, THAT READ AN ARRAY OF IDS AND RETURNS THE SELECTED OBJECTS IN AN ARRAY
-
 export const getMetMuSpecificIDs = async (term) => {
   try {
     const res = await MetMuApi.get(
@@ -116,7 +114,7 @@ export const getMetMuSpecificIDs = async (term) => {
       })
     );
     const filteredArtworks = artworks.filter(Boolean);
-    console.log("metMu", filteredArtworks);
+    //console.log("metMu", filteredArtworks);
     return filteredArtworks;
   } catch (error) {
     console.error(error);
@@ -221,49 +219,53 @@ export const getHarvardSpecifics = (term) => {
       // field: "images:idsid",
       size: "40",
     },
-  }).then((res) => {
-    const artworks = [];
-    const resArray = res.data.records;
-    let dud = 0;
-    resArray.forEach((artwork) => {
-      let artist = "";
-      let imageId;
-      //
-      if (artwork.people && artwork.people.length > 0) {
-        const artistsArr = [];
-        artwork.people.forEach((person) => {
-          artistsArr.push(person.displayname);
-        });
-        artist = artistsArr.toString();
-      } else {
-        artist = "Unknown Artist";
-      }
+  })
+    .then((res) => {
+      const artworks = [];
+      const resArray = res.data.records;
+      let dud = 0;
+      resArray.forEach((artwork) => {
+        let artist = "";
+        let imageId;
+        //
+        if (artwork.people && artwork.people.length > 0) {
+          const artistsArr = [];
+          artwork.people.forEach((person) => {
+            artistsArr.push(person.displayname);
+          });
+          artist = artistsArr.toString();
+        } else {
+          artist = "Unknown Artist";
+        }
 
-      if (artwork.images && artwork.images.length > 0) {
-        imageId = artwork.images[0].idsid;
-      }
-      //
-      if (!imageId) {
-        dud += 1;
-      } else {
-        const newArtObj = {
-          id: artwork.id,
-          artist: artist,
-          title: artwork.title || "Unknown Title",
-          date: artwork.dated || "Unknown Date",
-          type: artwork.classification || "Unknown Art Type",
-          medium: artwork.medium || "Unknown Medium",
-          image_url: `https://ids.lib.harvard.edu/ids/iiif/${imageId}/full/843,/0/default.jpg`,
-          description:
-            artwork.description || "No more information at this time",
-          location: "Harvard Art Museums",
-        };
-        artworks.push(newArtObj);
-      }
+        if (artwork.images && artwork.images.length > 0) {
+          imageId = artwork.images[0].idsid;
+        }
+        //
+        if (!imageId) {
+          dud += 1;
+        } else {
+          const newArtObj = {
+            id: artwork.id,
+            artist: artist,
+            title: artwork.title || "Unknown Title",
+            date: artwork.dated || "Unknown Date",
+            type: artwork.classification || "Unknown Art Type",
+            medium: artwork.medium || "Unknown Medium",
+            image_url: `https://ids.lib.harvard.edu/ids/iiif/${imageId}/full/843,/0/default.jpg`,
+            description:
+              artwork.description || "No more information at this time",
+            location: "Harvard Art Museums",
+          };
+          artworks.push(newArtObj);
+        }
+      });
+      //console.log("retHARV", dud, artworks);
+      return artworks;
+    })
+    .catch((error) => {
+      console.error(error);
     });
-    console.log("retHARV", dud, artworks);
-    return artworks;
-  });
 };
 
 // export const getTenArtworks = () => {

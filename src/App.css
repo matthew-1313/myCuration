@@ -27,24 +27,6 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-/* fghj */
-.dropdown {
-  position:absolute
-}
 
 .searchInput {
   color: #1a1a1a;
@@ -54,36 +36,8 @@
   border-radius: 8px;
 }
 
-.dropdown-content {
-  background-color: #f1f1f1;
-  border: none;
-  padding: 10px 16px;
-  position: absolute;
-  border-radius: 8px;
-  background-color: #1a1a1a;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.dropdown-content a {
-  color: rgba(255, 255, 255, 0.87);
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  color: #1a1a1a;
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.87);
-}
-
 .image-list-1 {
-  display: inline;
+  display: contents;
   /* padding: 1em; */
 }
 
@@ -110,6 +64,7 @@
 .small-art-container button {
   z-index: 1;
   width: 20vw;
+  font-size: 2vw;
 }
 
 .small-image {
@@ -127,7 +82,23 @@
 }
 
 .wallBoundry {
+  position:relative;
   width: 90vw;
+}
+
+.list-boundary {
+  /* border: solid 6px; */
+  position: absolute;
+  z-index: 1;
+  width: 78vw;
+  height: 38vw;
+  left: 5.5vw;
+  top: 5.5vw;
+}
+
+.image-boundary {
+  position: absolute;
+  z-index: 0;
 }
 
 .backgroundImage {
@@ -135,7 +106,7 @@
 }
 
 .wall-list {
-  display: inline;
+  display:contents;
   /* padding: 1em; */
 }
 
@@ -144,20 +115,22 @@
 }
 
 .wall-art-tile {
-  /* max-height: 10vw;
-  max-width: 15vw; */
   padding: 1vw;
   color: #1a1a1a;
-  background-color: rgba(255, 255, 255, 0.87);
-  border-radius: 8px;
   display: inline-block;
 }
 
-.small-image {
+.wall-image {
   z-index: 0;
-  width: 20vw;
-  height: 20vw;
+  width: 11vw;
+  height: 11vw;
   /* width: 100%; */
   object-fit:scale-down;
   display: inline;
+}
+
+.highlight-boundary {
+  position: relative;
+  top: 60vw;
+  width: 80vw;
 }

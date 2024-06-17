@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import wall1 from "../images/wall1.png";
+import { Highlight } from "./Highlight";
 
-export const Wall = ({ setHighlightedArt, myWall }) => {
+export const Wall = ({ myWall, myWallCount, setMyWallCount }) => {
   //import myWall state and populate a div with all pictures.
   //if a picture is clicked update highlighted with that object
+  const [highlightedArt, setHighlightedArt] = useState();
+
   const dummyWall = [
     {
       artist: "Unidentified Artist",
@@ -31,23 +34,39 @@ export const Wall = ({ setHighlightedArt, myWall }) => {
     },
   ];
 
+  function updateHighlighted(artwork) {
+    setHighlightedArt(artwork);
+  }
+
   return (
     <div>
-      <h2>Wall</h2>
-      <div className="wallBoundry">
-        <img className="backgroundImage" src={wall1} />
-      </div>
       <div>
-        <ul className="wall-list">
-          {dummyWall.map((artwork) => (
-            <div key={artwork.id} className="wall-art-tile">
-              <div className="wall-art-container">
-                <img src={artwork.image_url} className="wall-image" />
-              </div>
-            </div>
-          ))}
-        </ul>
+        <h2>Wall</h2>
+        <div className="wallBoundry">
+          <div className="list-boundary">
+            <ul className="wall-list">
+              {myWall.map((artwork) => (
+                <a key={artwork.id} onClick={() => updateHighlighted(artwork)}>
+                  <div className="wall-art-tile">
+                    <div className="wall-art-container">
+                      <img src={artwork.image_url} className="wall-image" />
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </ul>
+          </div>
+          <div className="image-boundary">
+            <img className="backgroundImage" src={wall1} />
+          </div>
+        </div>
       </div>
+      <br />
+      <Highlight
+        highlightedArt={highlightedArt}
+        myWallCount={myWallCount}
+        setMyWallCount={setMyWallCount}
+      />
     </div>
   );
 };
